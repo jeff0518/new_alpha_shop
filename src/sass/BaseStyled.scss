@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+:root {
+    --main-font-family: 'Noto Sans TC', sans-serif;
+    --width: 88%;
+    --white: #ffffff;
+    --pink: #f67599;
+    --nav-icon: #2a2a2a;
+    --main-text: #2a2a2a;
+    --main-icon: #333333;
+    --input-label: #808080;
+    --input-text: #999999;
+    --main-line: #e6e6e6;
+    --undone-progress-border: #f0f0f5;
+    --product-action-text: #000000;
+    --footer-background-color: #f6f7f8;
+
+    --grey-800: #2a2a2a;
+    --grey-700: #333333;
+    --grey-400: #808080;
+    --grey-300: #999999;
+    
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+  }
+
+  body {
+    background-color: var(--background-color);
+    color: var(--main-text);
+    font-family: var(--main-font-family);
+    font-size: 16px;
+    font-style: normal;
+    user-select: none;
+  }
+

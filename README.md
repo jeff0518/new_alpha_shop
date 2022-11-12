@@ -1,7 +1,18 @@
-# Getting Started with Create React App
+# Alpha Shop - React
+此專案以 React 進行開發，並以 styled-components  進行 CSS 樣式撰寫。
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 專案畫面
+![螢幕快照](./public/images/%E6%88%AA%E5%9C%96%202022-11-04%2003.03.31.png)
 
+## Features-產品功能
+此專案為購物車。
+目前版本僅以 React 將畫面 UI 元件化，是一個靜態網頁，未來將加入 RWD 及 狀態控制等功能。
+
+完成的元件包含：
+
+Header
+Main (Step & Cart)
+Footer
 ## Available Scripts
 
 In the project directory, you can run:
