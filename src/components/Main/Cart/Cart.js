@@ -63,23 +63,32 @@ const PRODUCTS = [
 ];
 
 const Cart = () => {
-  const [count, setCount] = useState(0);
-  let isTotal = 0;
+  const [count, setCount] = useState(PRODUCTS);
+
+
+    let total = null;
+    count.map((product) => (total = total + product.price * product.quantity));
+    // const newTotal = total > 0 ? total : "購物籃是空的";
+
+
+  
   // 為了計算價錢
   return (
     <StyledSectionCart>
       <h3 className="cart-title">購物籃</h3>
       <section>
         {/* 因為格式都一樣只有文字跟圖片不同，所以用渲染的方式 */}
-        {PRODUCTS.map((e) => {
-          isTotal += e.price * e.quantity;
+        {count.map((e) => {
+          // setCount(e.price * e.quantity)
           return (
             <Product
               key={e.id}
+              id={e.id}
               price={e.price}
               image={e.image}
               name={e.name}
               quantity={e.quantity}
+              count={count}
               func={setCount}
             />
           );
@@ -91,7 +100,7 @@ const Cart = () => {
       </section>
       <section className="cart-info total">
         <div className="text">小計</div>
-        <div className="price">{isTotal + count}</div>
+        <div className="price">{total > 0 ? total : "購物車沒有東西喔"}</div>
       </section>
     </StyledSectionCart>
   );

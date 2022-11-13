@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import "../../../sass/BaseStyled.css";
@@ -80,55 +80,69 @@ const StyledProductContainer = styled.div`
 
 const Product = (props) => {
   // 新增 State，初始值由props提供
-  const [isQuantity, setIsQuantity] = useState(props.quantity);
-
-  function handleQuantityMinus() {
-    setIsQuantity((quantityMinus) => quantityMinus - 1);  
-    props.func((total) => total - props.price);
-    
+  // const [isQuantity, setIsQuantity] = useState(props.quantity);
+  function handleQuantityMinus(id) {
+    let newCount = props.count.map((product) => {
+        if (product.id === id && product.quantity > 0) {
+          return {
+            ...product,
+            quantity: product.quantity - 1,
+          };
+        } else {
+          return product;
+        }
+      })
+    props.func(newCount.filter((product) => product.quantity !== 0));
+    // setIsQuantity((quantityMinus) => quantityMinus - 1);
+    // props.func()
   }
 
-  function handleQuantityPlus() {
-    setIsQuantity((quantityPlus) => quantityPlus + 1);
-    props.func((total) => total + props.price);
+  function handleQuantityPlus(id) {
+    props.func(
+      props.count.map((product) => {
+        if (product.id === id) {
+          return {
+            ...product,
+            quantity: product.quantity + 1,
+          };
+        } else {
+          return product;
+        }
+      })
+    );
+    // setIsQuantity((quantityPlus) => quantityPlus + 1);
+    // props.func((quantityMinus) => quantityMinus + 1);
   }
 
-  function judge() {
-    if (isQuantity > 0) {
-      return (
-        <StyledProductContainer data-count="0" data-price="3999">
-          <img className="img-container" src={props.image} alt="" />
-          <div className="product-info">
-            <div className="product-name">{props.name}</div>
-            <div className="product-control">
-              <div className="product-action" href="#">
-                <img
-                  src="icons/IconMinus.svg"
-                  alt=""
-                  className="minus"
-                  onClick={handleQuantityMinus}
-                />
-              </div>
-              <span className="product-count">{isQuantity}</span>
-              <div className="product-action" href="#">
-                <img
-                  src="/icons/IconPlus.svg"
-                  alt=""
-                  className="plus"
-                  onClick={handleQuantityPlus}
-                />
-              </div>
-            </div>
-            <div className="price rwd-price">{props.price}</div>
+  return (
+    <StyledProductContainer>
+      <img className="img-container" src={props.image} alt="" />
+      <div className="product-info">
+        <div className="product-name">{props.name}</div>
+        <div className="product-control">
+          <div className="product-action" href="#">
+            <img
+              src="icons/IconMinus.svg"
+              alt=""
+              className="minus"
+              onClick={() => handleQuantityMinus(props.id)}
+            />
           </div>
-          <div className="price">{props.price * isQuantity}</div>
-        </StyledProductContainer>
-      );
-    } else {
-      return <></>;
-    }
-  }
-  return <>{judge()}</>;
+          <span className="product-count">{props.quantity}</span>
+          <div className="product-action" href="#">
+            <img
+              src="/icons/IconPlus.svg"
+              alt=""
+              className="plus"
+              onClick={() => handleQuantityPlus(props.id)}
+            />
+          </div>
+        </div>
+        {/* <div className="price rwd-price">{props.price * props.quantity}</div> */}
+      </div>
+      <div className="price">{props.price * props.quantity}</div>
+    </StyledProductContainer>
+  );
 };
 
 export default Product;
