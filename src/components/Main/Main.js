@@ -4,6 +4,7 @@ import From from "./Steps/From";
 import StepProgress from './Steps/StepProgress'
 import ProgressControl from './Steps/ProgressControl'
 import Cart from "./Cart/Cart";
+import { CartContextProvider } from "./Store/CartContext";
 
 // 使用grid排版
 const MainStyled = styled.main`
@@ -68,7 +69,7 @@ const MainRWDStyled = styled.main`
 const Main = () => {
   const [step, setStep] = useState(1)
   return (
-    <>
+    <CartContextProvider>
       <MainStyled>
         <div className="left-Container">
           <StepProgress step={step} />
@@ -91,7 +92,7 @@ const Main = () => {
           <ProgressControl step={step} setStep={setStep} />
         </div>
       </MainRWDStyled>
-    </>
+    </CartContextProvider>
   );
 }
 

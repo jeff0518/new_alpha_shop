@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, {useContext} from "react";
 import Product from "./Product";
+import { CartContext, CartMinusContext, CartPulsContext } from "../Store/CartContext";
 import styled from "styled-components";
 
 const StyledSectionCart = styled.section`
@@ -11,7 +12,6 @@ const StyledSectionCart = styled.section`
   border-radius: 8px;
   margin-top: 86px;
   padding: 7.2% 5.5%;
-
   .cart-info {
     max-width: 392px;
     width: 100%;
@@ -22,87 +22,47 @@ const StyledSectionCart = styled.section`
     border-top: 1px solid var(--undone-progress-border);
     margin-top: 32px;
   }
-
   @media (max-width: 1266px) {
     margin-top: 0;
   }
 `;
 
-// const PRODUCTS = [
-//   {
-//     id: "1",
-//     name: "貓咪罐罐",
-//     img: "https://picsum.photos/300/300?text=1",
-//     price: 100,
-//     quantity: 2,
-//   },
-//   {
-//     id: "2",
-//     name: "貓咪干干",
-//     img: "https://picsum.photos/300/300?text=2",
-//     price: 200,
-//     quantity: 1,
-//   },
-// ];
-
-const PRODUCTS = [
-  {
-    id: 1,
-    name: "破壞補丁修身牛仔褲",
-    price: 3999,
-    image: "/icons/Destroy.svg",
-    quantity: 1,
-  },
-  {
-    id: 2,
-    name: "刷色直筒牛仔褲",
-    price: 1299,
-    image: "/icons/Straight.svg",
-    quantity: 1,
-  },
-];
 
 const Cart = () => {
-  const [count, setCount] = useState(PRODUCTS);
+  const ctx = useContext(CartContext);
+  const minus = useContext(CartMinusContext);
+  const plus = useContext(CartPulsContext);
+  let isTotal = 0;
 
-
-    let total = null;
-    count.map((product) => (total = total + product.price * product.quantity));
-    // const newTotal = total > 0 ? total : "購物籃是空的";
-
-
-  
   // 為了計算價錢
   return (
-    <StyledSectionCart>
-      <h3 className="cart-title">購物籃</h3>
-      <section>
-        {/* 因為格式都一樣只有文字跟圖片不同，所以用渲染的方式 */}
-        {count.map((e) => {
-          // setCount(e.price * e.quantity)
-          return (
-            <Product
-              key={e.id}
-              id={e.id}
-              price={e.price}
-              image={e.image}
-              name={e.name}
-              quantity={e.quantity}
-              count={count}
-              func={setCount}
-            />
-          );
-        })}
-      </section>
-      <section className="cart-info shipping">
-        <div className="text">運費</div>
-        <div className="price">免費</div>
-      </section>
-      <section className="cart-info total">
-        <div className="text">小計</div>
-        <div className="price">{total > 0 ? total : "購物車沒有東西喔"}</div>
-      </section>
-    </StyledSectionCart>
+      <StyledSectionCart>
+        <h3 className="cart-title">購物籃</h3>
+        <section>
+          {ctx.map((item) => {
+            isTotal += item.quantity * item.price;
+            return (
+              <Product
+                key={item.id}
+                price={item.price}
+                image={item.image}
+                name={item.name}
+                quantity={item.quantity}
+                onClickMinus={() => minus(item.id)}
+                onClickPlus={() => plus(item.id)}
+              />
+            );
+          })}
+        </section>
+        <section className="cart-info shipping">
+          <div className="text">運費</div>
+          <div className="price">免費</div>
+        </section>
+        <section className="cart-info total">
+          <div className="text">小計</div>
+          <div className="price">{isTotal}</div>
+        </section>
+      </StyledSectionCart>
   );
 };
 
