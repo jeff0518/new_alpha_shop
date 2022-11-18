@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import {FromStateContext} from '../Store/FormContext'
 import styled from "styled-components";
 import "../../../sass/BaseStyled.css";
 
@@ -69,6 +70,7 @@ const StyledControl = styled.div`
 `;
 
 const ProgressControl = ({ step, setStep }) => {
+  const ctx = useContext(FromStateContext)
   
   const handleSetStepPlus = () => {
     setStep((step) => step + 1);
@@ -77,6 +79,18 @@ const ProgressControl = ({ step, setStep }) => {
   const handleSetStepMinus = () => {
     setStep((step) => step - 1);
   };
+
+  const handleSubmit = () => {
+     alert(`
+      \r付款資訊:
+      \r卡片持有人: ${ctx.creditCardName}
+      \r卡號: ${ctx.creditCardNumber}
+      \r有效期限: ${ctx.creditCardDate}
+      \rCVC/CCV: ${ctx.creditCardCVC}
+      \r------------------------------
+      \r總金額: ${ctx.totalAmount}`)
+    console.log(ctx)
+  }
 
 
   return (
@@ -111,7 +125,9 @@ const ProgressControl = ({ step, setStep }) => {
           <button className="prev" onClick={handleSetStepMinus}>
             ← 上一步
           </button>
-          <button className="next">確認下單</button>
+          <button className="next" onClick={handleSubmit}>
+            確認下單
+          </button>
         </section>
       )}
     </StyledControl>

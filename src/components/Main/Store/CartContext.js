@@ -20,6 +20,7 @@ const PRODUCTS = [
 export const CartContext = createContext();
 export const CartPulsContext = createContext();
 export const CartMinusContext = createContext();
+export const totalContext = createContext();
 
 export function CartContextProvider({ children }) {
   const [Cart, setCart] = useState(PRODUCTS);
@@ -29,8 +30,8 @@ export function CartContextProvider({ children }) {
       Cart.map((item) => {
         if (item.id === id) {
           return { ...item, quantity: item.quantity + 1 };
-        } 
-        return item
+        }
+        return item;
       })
     );
   }
@@ -44,6 +45,7 @@ export function CartContextProvider({ children }) {
     });
     setCart(newCart.filter((newCart) => newCart.quantity !== 0));
   }
+
   return (
     <CartContext.Provider value={Cart}>
       <CartPulsContext.Provider value={handleQuantityPlus}>
