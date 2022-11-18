@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import { FreightContext, FreightData } from "../Store/FreightContext";
 import styled from "styled-components";
 import "../../../sass/BaseStyled.css";
 
@@ -54,6 +55,9 @@ const StyledStepContent = styled.div`
 `;
 
 const Step2 = () => {
+  const ctx = useContext(FreightContext);
+
+  const freightData = useContext(FreightData);
   return (
     <StyledStepContent>
       <form data-phase="shipping">
@@ -64,6 +68,7 @@ const Step2 = () => {
               id="shipping-standard"
               type="radio"
               name="shipping"
+              onClick={() => ctx(0)}
               defaultChecked
             />
             <div className="radio-info">
@@ -75,8 +80,13 @@ const Step2 = () => {
             </div>
             <div className="radio-box-border"></div>
           </label>
-          <label className="radio-group" data-price="500" >
-            <input id="shipping-dhl" type="radio" name="shipping" />
+          <label className="radio-group" data-price="500">
+            <input
+              id="shipping-dhl"
+              type="radio"
+              name="shipping"
+              onClick={() => ctx(1)}
+            />
             <div className="radio-info">
               <div className="radio-info-content">
                 <div className="text">DHL 貨運</div>

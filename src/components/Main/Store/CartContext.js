@@ -21,10 +21,11 @@ export const CartContext = createContext();
 export const CartPulsContext = createContext();
 export const CartMinusContext = createContext();
 export const totalContext = createContext();
+export const totalDataContext = createContext()
 
 export function CartContextProvider({ children }) {
   const [Cart, setCart] = useState(PRODUCTS);
-
+  const [amount, setAmount] = useState(0);
   function handleQuantityPlus(id) {
     setCart(
       Cart.map((item) => {
@@ -48,11 +49,15 @@ export function CartContextProvider({ children }) {
 
   return (
     <CartContext.Provider value={Cart}>
-      <CartPulsContext.Provider value={handleQuantityPlus}>
-        <CartMinusContext.Provider value={handleQuantityMinus}>
-          {children}
-        </CartMinusContext.Provider>
-      </CartPulsContext.Provider>
+      <totalDataContext.Provider value={amount}>
+        <totalContext.Provider value={setAmount}>
+          <CartPulsContext.Provider value={handleQuantityPlus}>
+            <CartMinusContext.Provider value={handleQuantityMinus}>
+              {children}
+            </CartMinusContext.Provider>
+          </CartPulsContext.Provider>
+        </totalContext.Provider>
+      </totalDataContext.Provider>
     </CartContext.Provider>
   );
 }

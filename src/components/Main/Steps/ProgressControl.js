@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
-import {FromStateContext} from '../Store/FormContext'
+import { FromStateContext } from "../Store/FormContext";
+import {totalDataContext} from "../Store/CartContext"
 import styled from "styled-components";
 import "../../../sass/BaseStyled.css";
 
@@ -71,6 +72,7 @@ const StyledControl = styled.div`
 
 const ProgressControl = ({ step, setStep }) => {
   const ctx = useContext(FromStateContext)
+  const totalData = useContext(totalDataContext);
   
   const handleSetStepPlus = () => {
     setStep((step) => step + 1);
@@ -88,7 +90,7 @@ const ProgressControl = ({ step, setStep }) => {
       \r有效期限: ${ctx.creditCardDate}
       \rCVC/CCV: ${ctx.creditCardCVC}
       \r------------------------------
-      \r總金額: ${ctx.totalAmount}`)
+      \r總金額: ${totalData.toLocaleString()}`);
     console.log(ctx)
   }
 

@@ -1,10 +1,13 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import Product from "./Product";
 import {
   CartContext,
   CartMinusContext,
   CartPulsContext,
+  totalContext,
 } from "../Store/CartContext";
+// import { FromStateContext, DispatchFromContext } from "../Store/FormContext";
+import { FreightData } from "../Store/FreightContext";
 import styled from "styled-components";
 
 const StyledSectionCart = styled.section`
@@ -31,13 +34,26 @@ const StyledSectionCart = styled.section`
   }
 `;
 
-
 const Cart = () => {
   const ctx = useContext(CartContext);
   const minus = useContext(CartMinusContext);
   const plus = useContext(CartPulsContext);
-  let isTotal = 0
-  // 為了計算價錢
+  const freightData = useContext(FreightData);
+  const amount = useContext(totalContext);
+  let isTotal = 0;
+  function totalAmount() {
+    ctx.map((item) => {
+      isTotal += item.price * item.quantity;
+      return isTotal;
+    });
+    isTotal += freightData.price;
+
+    return isTotal;
+  }
+  useEffect(() => {
+    amount(isTotal);
+  }, [totalAmount]);
+
   return (
     <StyledSectionCart>
       <h3 className="cart-title">購物籃</h3>
@@ -58,13 +74,11 @@ const Cart = () => {
       </section>
       <section className="cart-info shipping">
         <div className="text">運費</div>
-        <div className="price">
-          {/* {checkedData === 0 ? "免費" : `$${checkedData}`} */}
-        </div>
+        <div className="price">{freightData.price}</div>
       </section>
       <section className="cart-info total">
         <div className="text">小計</div>
-        <div className="price">{isTotal.toLocaleString()}</div>
+        <div className="price">{totalAmount().toLocaleString()}</div>
       </section>
     </StyledSectionCart>
   );

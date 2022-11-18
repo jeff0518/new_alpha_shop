@@ -5,7 +5,6 @@ const FromState = {
   creditCardNumber: "",
   creditCardDate: "",
   creditCardCVC: "",
-  totalAmount: '',
 };
 
 export const FromStateContext = createContext()
@@ -65,10 +64,6 @@ function fromReducer(fromState, action) {
 
     case 'cardCVC': {
       return {...fromState, creditCardCVC: action.value}
-    }
-
-    case 'total': {
-      return { ...fromState, totalAmount: action.value };
     }
 
     default: {

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import From from "./Steps/From";
-import StepProgress from './Steps/StepProgress'
-import ProgressControl from './Steps/ProgressControl'
+import StepProgress from "./Steps/StepProgress";
+import ProgressControl from "./Steps/ProgressControl";
 import Cart from "./Cart/Cart";
 import { CartContextProvider } from "./Store/CartContext";
 import { FormContextProvider } from "./Store/FormContext";
+import { FreightContextProvider } from "./Store/FreightContext";
 
 // 使用grid排版
 const MainStyled = styled.main`
@@ -68,35 +69,37 @@ const MainRWDStyled = styled.main`
 `;
 
 const Main = () => {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(1);
   return (
     <CartContextProvider>
       <FormContextProvider>
-        <MainStyled>
-          <div className="left-Container">
-            <StepProgress step={step} />
-            <From step={step} />
-            <ProgressControl step={step} setStep={setStep} />
-          </div>
-          <div className="right-Container">
-            <Cart />
-          </div>
-        </MainStyled>
-        <MainRWDStyled>
-          <div className="step-container">
-            <StepProgress step={step} />
-            <From step={step} />
-          </div>
-          <div className="cart-container">
-            <Cart />
-          </div>
-          <div className="button">
-            <ProgressControl step={step} setStep={setStep} />
-          </div>
-        </MainRWDStyled>
+        <FreightContextProvider>
+          <MainStyled>
+            <div className="left-Container">
+              <StepProgress step={step} />
+              <From step={step} />
+              <ProgressControl step={step} setStep={setStep} />
+            </div>
+            <div className="right-Container">
+              <Cart />
+            </div>
+          </MainStyled>
+          <MainRWDStyled>
+            <div className="step-container">
+              <StepProgress step={step} />
+              <From step={step} />
+            </div>
+            <div className="cart-container">
+              <Cart />
+            </div>
+            <div className="button">
+              <ProgressControl step={step} setStep={setStep} />
+            </div>
+          </MainRWDStyled>
+        </FreightContextProvider>
       </FormContextProvider>
     </CartContextProvider>
   );
-}
+};
 
-export default Main
+export default Main;
